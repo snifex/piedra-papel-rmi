@@ -20,11 +20,21 @@ def play():
             result = server.choose_winner(player)
 
         print(result)
+        continua_opcion = input("Quieres seguir jugando? (S/N): ")
+        # if continua_opcion.capitalize() == "S":
+        #     resultado_continua = server.check_players(player)
+            
+        #     #Esperamos resultado
+        #     while resultado_continua == 0:
+        #         resultado_continua = server.check_players(player)
 
-        continua = input("Quieres seguir jugando? (S/N):  ")
-        if continua.capitalize() == "N":
-            server.disconnect(player)
+        #     if resultado_continua == False:
+        #         break
+        if continua_opcion.capitalize() == "N":
             break
+
+            
+            
 
 
 # Hilo
