@@ -1,8 +1,8 @@
 from xmlrpc.server import SimpleXMLRPCServer
 
 class GameServer:
-    state_player_one: None
-    state_player_two: None
+    state_player_one: bool = False
+    state_player_two: bool = False
     replay_player_one: bool = False
     replay_player_two: bool = False
     players_in_game: int = 0
@@ -15,39 +15,7 @@ class GameServer:
         "TP": {"ganador": 1, "frase" : "tijeras corta papel"},
         "PR": { "ganador": 1, "frase":"papel cubre roca"},
         "RP" : { "ganador":2, "frase":"papel cubre roca"}
-    }
-
-    # #Comprobamos si los jugadores quieren seguir jugando
-    # def check_players(self, num_player):
-    #     if num_player == 1:
-    #         self.replay_player_one = True
-    #         self.state_player_one = True
-    #     else:
-    #         self.replay_player_two = True
-    #         self.state_player_two = True
-
-    #     #Checamos si ya seleccionaron si quieren jugar o no
-    #     if not all([self.state_player_one, self.state_player_two]):
-    #         return 0
-        
-    #     #Checamos si los 2 jugadores quieren jugar
-    #     if self.replay_player_one and self.replay_player_two:
-    #         self.state_player_one = self.replay_player_one = False
-    #         self.state_player_two = self.replay_player_two = False
-    #         return True
-            
-    #     self.state_player_one = self.replay_player_one = False
-    #     self.state_player_two = self.replay_player_two = False
-
-    #     return False
-        
-
-
-    def game_ends(self,num_player):
-        self.players_in_game -= 1
-        self.players[1]["choice"] = None
-        self.players[2]["choice"] = None
-        print(f"Jugador {num_player} se ha desconectado")
+    }     
 
     # Hace la conexión con el cliente
     def get_connection(self):
@@ -68,9 +36,11 @@ class GameServer:
     
     # Escogemos al ganador
     def choose_winner(self, num_jugador):
+        #Obtenemos los objetos de cada jugador
         player_one = self.jugadores[num_jugador]
         player_two = self.jugadores[self.jugadores[num_jugador]['jugador_en_contra']]
 
+        #Comprobamos si ambos jugadores han escogido su elección
         if not all([self.jugadores[1]["opcion"],self.jugadores[2]["opcion"]]):
             return False
         
